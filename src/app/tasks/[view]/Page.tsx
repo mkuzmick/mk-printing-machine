@@ -8,25 +8,48 @@ interface TaskProps {
     createdTime: string;
 }
 
+// const Task = ({ title, assignedToSlug, notes, temporalStatus, createdTime }: TaskProps) => {
+//     return (
+//         <div className="bg-white shadow-lg rounded-lg p-6 mb-4 max-w-md mx-auto print:shadow-none print:mb-12 print:bg-transparent print:break-inside-avoid">
+//             <h2 className="text-xl font-semibold mb-2">{title}</h2>
+//             <p className="text-sm text-gray-700 mb-1">
+//                 <strong>Assigned To:</strong> {assignedToSlug.join(', ')}
+//             </p>
+//             <p className="text-sm text-gray-700 mb-1">
+//                 <strong>Notes:</strong> {notes}
+//             </p>
+//             <p className="text-sm text-gray-700 mb-1">
+//                 <strong>Status:</strong> {temporalStatus}
+//             </p>
+//             <p className="text-sm text-gray-500">
+//                 <strong>Created Time:</strong> {new Date(createdTime).toLocaleString()}
+//             </p>
+//         </div>
+//     );
+// }
+
+
 const Task = ({ title, assignedToSlug, notes, temporalStatus, createdTime }: TaskProps) => {
     return (
-        <div className="bg-white shadow-lg rounded-lg p-6 mb-4 max-w-md mx-auto print:max-w-[2.5in] print:shadow-none print:mb-2 print:bg-transparent print:break-inside-avoid">
-            <h2 className="text-xl font-semibold mb-2">{title}</h2>
-            <p className="text-sm text-gray-700 mb-1">
+        <div className="bg-white shadow-lg rounded-lg p-6 mb-4 max-w-md mx-auto print:shadow-none print:max-w-3xl print:px-8 print:mb-14 print:bg-transparent print:break-inside-avoid">
+            <h2 className="text-xl font-black mb-2 print:text-4xl">{title}</h2>
+            <p className="text-sm text-gray-700 mb-1 print:text-lg">
                 <strong>Assigned To:</strong> {assignedToSlug.join(', ')}
             </p>
-            <p className="text-sm text-gray-700 mb-1">
+            <p className="text-sm text-gray-700 mb-1 print:text-lg">
                 <strong>Notes:</strong> {notes}
             </p>
-            <p className="text-sm text-gray-700 mb-1">
-                <strong>Status:</strong> {temporalStatus}
+            <p className="text-sm text-gray-700 mb-1 print:text-lg">
+                <strong>Temporal Status:</strong> {temporalStatus}
             </p>
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-gray-500 print:text-lg">
                 <strong>Created Time:</strong> {new Date(createdTime).toLocaleString()}
             </p>
         </div>
     );
 }
+
+
 
 export default async function Page({ params }: { params: { view: string } }) {
     const url = `https://api.airtable.com/v0/${process.env.AIRTABLE_WORK_BASE}/Tasks?view=${params.view}&maxRecords=1000`;
@@ -46,7 +69,7 @@ export default async function Page({ params }: { params: { view: string } }) {
 
         return (
             <main>
-                <div>Printable tasks for Airtable View: {params.view}</div>
+                <div className='mb-16'>Printable tasks for Airtable View: {params.view}</div>
                 {data.records.map((record: any) => (
                     <Task
                         key={record.id}
